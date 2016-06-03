@@ -1,0 +1,4 @@
+# Chapter 1 GNU Make and Gradle Compared
+
+{{ md recipe1.md }}
+
