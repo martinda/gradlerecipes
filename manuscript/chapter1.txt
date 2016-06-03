@@ -1,4 +1,4 @@
-# Creating an output file
+# Create an output file
 
 The following code creates an output file with GNU Make:
 
