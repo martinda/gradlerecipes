@@ -1,8 +1,8 @@
 # Build files in a directory
 
-## Problem: You want to build files in a directory
+You want to build files in a directory
 
-### GNU Make solution
+## GNU Make solution
 
 With GNU Make, you can build two files in the same directory with one rule like so:
 
@@ -26,7 +26,7 @@ $ make
 make: 'outputfile.txt' is up to date.
 ```
 
-### Gradle solution
+## Gradle solution
 
 Gradle:
 
