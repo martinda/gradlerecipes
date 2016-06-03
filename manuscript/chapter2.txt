@@ -1,0 +1,82 @@
+# Build files in a directory
+
+## Problem: You want to build files in a directory
+
+### GNU Make solution
+
+With GNU Make, you can build two files in the same directory with one rule like so:
+
+```cmake
+outputdir/outputfile1.txt outputdir/outputfile2.txt:
+        mkdir $(@D)
+        echo "content" >$@
+```
+
+First you need to create the directory, then you create the files. You execute the build like so:
+
+```
+$ make
+echo "content" >outputfile.txt
+```
+
+If you ask GNU Make to rebuild, it refuses since the two files already exist:
+
+```cmake
+$ make
+make: 'outputfile.txt' is up to date.
+```
+
+### Gradle solution
+
+Gradle:
+
+```groovy
+apply plugin: 'base'
+
+task outputFile() {
+    def outputFile = file('outputFile.txt')
+    outputs.file outputFile
+    doLast {
+        println 'Writing content to file'
+        outputFile.write("content\n")
+    }
+}
+```
+
+Execution:
+
+```
+$ gradle --daemon outputFile
+:outputFile
+Writing content to file
+
+BUILD SUCCESSFUL
+
+Total time: 0.515 secs
+$ gradle --daemon outputFile
+:outputFile UP-TO-DATE
+
+BUILD SUCCESSFUL
+
+Total time: 0.523 secs
+```
+
+### Comment
+
+Both, as expected, only build the output file when it does not exist.
+The GNU Make code is short. The Gradle code is long and verbose.
+
+## No pre-requisite, build an empty directory
+
+Change directory timestamp.
+
+## No pre-requisite, build a directory with files in it
+
+Change directory content: remove or add a file. Does gradle empty the directory? Does it remove spurious files.
+
+Change file content in directory. Does gradle empty the dir when it determines it needs to run again?
+
+## Single directory pre-requisite
+
+## Single file pre-requisite
+
