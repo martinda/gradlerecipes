@@ -1,16 +1,76 @@
-# Create an output file
+# Create a file
 
-The following code creates an output file with GNU Make:
+You want to create a file in the current working directory. There are three cases to consider when creating a file using a build system such as GNU Make or Gradle.
 
-```cmake
+1. **initial output file creation**: this is when the file is first created
+2. **incremental output file regeneration**: this is when the pre-requisites or the inputs change
+3. **external modifications to the output file**: this is when an external process modifies the output file, or when the output file is modified by the user *after* it has been build by the build system.
+
+We will explore each case with GNU Make and Gradle.
+
+## GNU Make solution
+
+The following code will be used for GNU Make:
+
+_Code to create a file with GNU Make_
+----
+```makefile
 outputfile.txt:
   echo "text" >$@
 ```
+----
 
-Executing `make outputfile.txt` will create the file if it does not exist. Once the file exists, GNU Make will not longer try to create it. In the example above, GNU Make does not track the file content, it only checks whether the output file exists or not.
+### Initial output file creation
+
+To create the file initially, simply execute GNU Make:
+
+----
+```bash
+$ make
+echo "text" >outputfile.txt
+```
+----
+
+GNU Make creates the file in the current working directory.
+
+### Incremental output file regeneration
+
+----
+```
+$ make
+make: 'outputfile.txt' is up to date.
+```
+----
+
+GNU Make does not rebuild the file as there are no inputs and the file still exists.
+
+### External modifications to the output file
+
+Let's modify the output file with a simple shell command:
+
+----
+```bash
+$ echo "more text" >>outputfile.txt
+```
+----
+
+And now we re-run GNU Make:
+
+----
+```bash
+$ make
+make: 'outputfile.txt' is up to date.
+```
+----
+
+GNU Make does not rebuild the file. This is because GNU Make only checks for the existence of the file. If the file exists, and if it does not have pre-requisites, GNU Make does not rebuild it.
+
+## Gradle solution
 
 The following code creates an output file with Gradle:
 
+_Create a file with Gradle_
+----
 ```groovy
 task outputFileName() {
     def outputFile = new File('outputFile.txt')
@@ -21,5 +81,6 @@ task outputFileName() {
     }
 }
 ```
+----
 
 
