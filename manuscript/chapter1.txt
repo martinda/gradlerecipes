@@ -3,8 +3,8 @@
 You want to create a file in the current working directory. There are three cases to consider when creating a file using a build system such as GNU Make or Gradle.
 
 1. **initial output file creation**: this is when the file is first created
-2. **incremental output file regeneration**: this is when the pre-requisites or the inputs change
-3. **external modifications to the output file**: this is when an external process modifies the output file, or when the output file is modified by the user *after* it has been build by the build system.
+2. **incremental output file regeneration**: when the pre-requisites or the inputs change, the output file needs to be regenerated
+3. **external modifications to the output file**: when an external process modifies the output file, or when the output file is modified by the user *after* it has been build, how does the build system react?
 
 We will explore each case with GNU Make and Gradle.
 
@@ -13,6 +13,7 @@ We will explore each case with GNU Make and Gradle.
 The following code will be used for GNU Make:
 
 _Code to create a file with GNU Make_
+
 ----
 ```makefile
 outputfile.txt:
@@ -70,6 +71,7 @@ GNU Make does not rebuild the file. This is because GNU Make only checks for the
 The following code creates an output file with Gradle:
 
 _Create a file with Gradle_
+
 ----
 ```groovy
 task outputFileName() {
